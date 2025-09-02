@@ -1,4 +1,4 @@
-ab -n 10000 -c 100 http://localhost:3000/normal
+ ab -n 10000 -c 100 http://localhost:3000/normal
 This is ApacheBench, Version 2.3 <$Revision: 1879490 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -25,30 +25,30 @@ Document Path:          /normal
 Document Length:        558142 bytes
 
 Concurrency Level:      100
-Time taken for tests:   73.886 seconds
+Time taken for tests:   74.910 seconds
 Complete requests:      10000
 Failed requests:        0
 Total transferred:      5583560000 bytes
 HTML transferred:       5581420000 bytes
-Requests per second:    135.34 [#/sec] (mean)
-Time per request:       738.862 [ms] (mean)
-Time per request:       7.389 [ms] (mean, across all concurrent requests)
-Transfer rate:          73798.55 [Kbytes/sec] received
+Requests per second:    133.49 [#/sec] (mean)
+Time per request:       749.103 [ms] (mean)
+Time per request:       7.491 [ms] (mean, across all concurrent requests)
+Transfer rate:          72789.68 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0    0   0.2      0       4
-Processing:    23  735  42.1    728     905
-Waiting:       18  734  43.3    727     904
-Total:         23  735  41.9    728     905
+Connect:        0    0   0.1      0       2
+Processing:    24  745  38.9    743     881
+Waiting:       21  745  39.9    742     880
+Total:         24  745  38.8    743     881
 
 Percentage of the requests served within a certain time (ms)
-  50%    728
-  66%    751
-  75%    758
-  80%    762
-  90%    774
-  95%    787
-  98%    806
+  50%    743
+  66%    748
+  75%    756
+  80%    760
+  90%    768
+  95%    777
+  98%    795
   99%    815
- 100%    905 (longest request)
+ 100%    881 (longest request)

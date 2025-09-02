@@ -78,6 +78,9 @@ export class AppService {
       data.title = el.title;
       data.isPublished = el.isPublished;
       data.content = el.content;
+      data.createdAt = el.createdAt;
+      data.updatedAt = el.updatedAt;
+      data.id = el.id;
 
       const errors: ValidationError[] = await validate(data);
       if (errors.length) {
