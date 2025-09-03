@@ -1,10 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import {
-  Equals,
   IsEmail,
   IsNotEmpty,
   IsString,
-  Min,
   MinLength,
   validate,
   ValidationError,
@@ -74,13 +72,13 @@ export class AppService {
     for (let i = 0; i < bigArr.length; i++) {
       const el = bigArr[i];
       const data = new CreatePostDto();
-      data.authorName = el.authorName;
+      data.id = el.id;
       data.title = el.title;
-      data.isPublished = el.isPublished;
       data.content = el.content;
+      data.authorName = el.authorName;
       data.createdAt = el.createdAt;
       data.updatedAt = el.updatedAt;
-      data.id = el.id;
+      data.isPublished = el.isPublished;
 
       const errors: ValidationError[] = await validate(data);
       if (errors.length) {

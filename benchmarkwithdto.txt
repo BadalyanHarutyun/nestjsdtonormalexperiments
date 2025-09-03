@@ -1,4 +1,4 @@
-ab -n 10000 -c 100 http://localhost:3000/dto
+ ab -n 10000 -c 100 http://localhost:3000/dto
 This is ApacheBench, Version 2.3 <$Revision: 1879490 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -25,30 +25,30 @@ Document Path:          /dto
 Document Length:        558142 bytes
 
 Concurrency Level:      100
-Time taken for tests:   123.308 seconds
+Time taken for tests:   125.272 seconds
 Complete requests:      10000
 Failed requests:        0
 Total transferred:      5583560000 bytes
 HTML transferred:       5581420000 bytes
-Requests per second:    81.10 [#/sec] (mean)
-Time per request:       1233.076 [ms] (mean)
-Time per request:       12.331 [ms] (mean, across all concurrent requests)
-Transfer rate:          44220.28 [Kbytes/sec] received
+Requests per second:    79.83 [#/sec] (mean)
+Time per request:       1252.718 [ms] (mean)
+Time per request:       12.527 [ms] (mean, across all concurrent requests)
+Transfer rate:          43526.91 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
 Connect:        0    0   0.2      0       3
-Processing:    27 1227  73.6   1220    1395
-Waiting:       23 1226  77.8   1220    1395
-Total:         27 1227  73.5   1220    1395
+Processing:    29 1246  69.1   1240    1374
+Waiting:       25 1245  71.7   1240    1374
+Total:         29 1246  69.0   1240    1374
 
 Percentage of the requests served within a certain time (ms)
-  50%   1220
-  66%   1232
-  75%   1243
-  80%   1249
-  90%   1275
-  95%   1302
-  98%   1356
-  99%   1365
- 100%   1395 (longest request)
+  50%   1240
+  66%   1253
+  75%   1263
+  80%   1272
+  90%   1297
+  95%   1319
+  98%   1340
+  99%   1356
+ 100%   1374 (longest request)
