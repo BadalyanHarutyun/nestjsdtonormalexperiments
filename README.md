@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project demonstrates the performance comparison between two different endpoints in a Nest.js application under high load conditions. The benchmark tests show how the server handles 10,000 requests with 100 concurrent connections for both a standard endpoint and a DTO-based endpoint. And in database was 1000 posts table data.(The README.md is AI generated :) )
+This project demonstrates the performance comparison between two different endpoints in a Nest.js application under high load conditions. The benchmark tests show how the server handles 10,000 requests with 100 concurrent connections for both a standard endpoint and a DTO-based endpoint. And in database was 1000 posts table data.(The README.md file is AI generated :) )
 
 ## Benchmark Results
 
