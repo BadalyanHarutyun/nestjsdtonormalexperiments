@@ -59,7 +59,7 @@ export class AppService {
     // ✅ Create Piscina once and reuse
     this.piscina = new Piscina({
       filename: join(__dirname, './workers/posts.worker.js'),
-      maxThreads: 4, // limit to prevent high RAM usage
+      maxThreads: 8, // limit to prevent high RAM usage
       idleTimeout: 10000, // stop workers after 10s of inactivity
     });
   }

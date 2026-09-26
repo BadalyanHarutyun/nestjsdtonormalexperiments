@@ -15,65 +15,13 @@ ab -n 10000 -c 100 http://localhost:3000/normal
 ```bash
 ab -n 10000 -c 100 http://localhost:3000/dto
 ```
-
+### Test 3: DTO Endpoint with worker (`/dto-worker`)
+```bash
+ab -n 10000 -c 100 http://localhost:3000/dto-worker
+```
 ## Performance Comparison
 
-| Metric | `/normal` Endpoint | `/dto` Endpoint | Difference |
-|--------|-------------------|----------------|------------|
-| Time taken for tests | 78.444 seconds | 125.272 seconds | +59.7% |
-| Requests per second | 127.48 [#/sec] | 79.83 [#/sec] | -37.4% |
-| Time per request | 784.440 ms | 1252.718 ms | +59.7% |
-| Transfer rate | 69,510.69 KB/sec | 43,526.91 KB/sec | -37.4% |
-| Failed requests | 0 | 0 | 0% |
-
-## Detailed Results
-
-### `/normal` Endpoint Performance
-
-**Connection Times (ms)**
-| Metric | Min | Mean | Std. Dev. | Median | Max |
-|--------|-----|------|-----------|--------|-----|
-| Connect | 0 | 0 | 0.2 | 0 | 3 |
-| Processing | 22 | 780 | 45.2 | 785 | 871 |
-| Waiting | 19 | 779 | 47.7 | 784 | 870 |
-| Total | 22 | 780 | 45.1 | 785 | 871 |
-
-**Percentile Distribution**
-| Percentile | Response Time (ms) |
-|------------|-------------------|
-| 50% | 785 |
-| 66% | 790 |
-| 75% | 793 |
-| 80% | 796 |
-| 90% | 813 |
-| 95% | 822 |
-| 98% | 837 |
-| 99% | 844 |
-| 100% | 871 |
-
-### `/dto` Endpoint Performance
-
-**Connection Times (ms)**
-| Metric | Min | Mean | Std. Dev. | Median | Max |
-|--------|-----|------|-----------|--------|-----|
-| Connect | 0 | 0 | 0.2 | 0 | 3 |
-| Processing | 29 | 1246 | 69.1 | 1240 | 1374 |
-| Waiting | 25 | 1245 | 71.7 | 1240 | 1374 |
-| Total | 29 | 1246 | 69.0 | 1240 | 1374 |
-
-**Percentile Distribution**
-| Percentile | Response Time (ms) |
-|------------|-------------------|
-| 50% | 1240 |
-| 66% | 1253 |
-| 75% | 1263 |
-| 80% | 1272 |
-| 90% | 1297 |
-| 95% | 1319 |
-| 98% | 1340 |
-| 99% | 1356 |
-| 100% | 1374 |
-
+see in BENCHMARK_RESULTS.md
 ## Analysis
 
 The benchmark results reveal significant performance differences between the two endpoints:
