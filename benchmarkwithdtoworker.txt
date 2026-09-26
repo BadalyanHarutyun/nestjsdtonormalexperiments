@@ -20,34 +20,34 @@ Server Software:
 Server Hostname:        localhost
 Server Port:            3000
 
-Document Path:          /normal
+Document Path:          /dto-worker
 Document Length:        1088647 bytes
 
 Concurrency Level:      100
-Time taken for tests:   102.382 seconds
+Time taken for tests:   140.067 seconds
 Complete requests:      10000
 Failed requests:        0
 Total transferred:      10888630000 bytes
 HTML transferred:       10886470000 bytes
-Requests per second:    97.67 [#/sec] (mean)
-Time per request:       1023.815 [ms] (mean)
-Time per request:       10.238 [ms] (mean, across all concurrent requests)
-Transfer rate:          103860.83 [Kbytes/sec] received
+Requests per second:    71.39 [#/sec] (mean)
+Time per request:       1400.667 [ms] (mean)
+Time per request:       14.007 [ms] (mean, across all concurrent requests)
+Transfer rate:          75916.86 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0    0   0.3      0       4
-Processing:    24 1019  55.4   1020    1104
-Waiting:       19 1018  56.4   1020    1103
-Total:         24 1019  55.2   1020    1104
+Connect:        0    0   0.2      0       3
+Processing:    35 1394 113.1   1370    1955
+Waiting:       31 1382 113.2   1358    1954
+Total:         35 1394 113.1   1370    1956
 
 Percentage of the requests served within a certain time (ms)
-  50%   1020
-  66%   1026
-  75%   1030
-  80%   1033
-  90%   1043
-  95%   1054
-  98%   1073
-  99%   1079
- 100%   1104 (longest request)
+  50%   1370
+  66%   1398
+  75%   1423
+  80%   1446
+  90%   1519
+  95%   1596
+  98%   1723
+  99%   1802
+ 100%   1956 (longest request)

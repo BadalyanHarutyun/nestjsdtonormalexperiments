@@ -19,4 +19,8 @@ export class AppController {
   async getDto(): Promise<CreatePostDto[]> {
     return await this.appService.getPostsWithDto();
   }
+  @Get('/dto-worker')
+  async getDtoWithWorker(): Promise<CreatePostDto[]> {
+    return await this.appService.getPostsWithDtoWorker();
+  }
 }

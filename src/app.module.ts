@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -6,15 +7,21 @@ import { Posts } from './post.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'your_username',
-      password: 'your_password', //TODO: Change with your crendantials I am lazy for .env
-      database: 'your_db',
-      entities: [Posts],
-      synchronize: false,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        type: config.get<'mysql'>('DB_TYPE', 'mysql'),
+        host: config.get<string>('DB_HOST', 'localhost'),
+        port: config.get<number>('DB_PORT', 3306),
+        username: config.get<string>('DB_USERNAME'),
+        password: config.get<string>('DB_PASSWORD'),
+        database: config.get<string>('DB_DATABASE'),
+        entities: [Posts],
+        synchronize: false,
+      }),
     }),
     TypeOrmModule.forFeature([Posts]),
   ],

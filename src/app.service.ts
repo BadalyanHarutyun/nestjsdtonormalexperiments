@@ -11,66 +11,97 @@ import { Posts } from './post.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePostDto } from './create-post.dto';
+import Piscina from 'piscina';
+import { join } from 'path';
 
+// ----------------------------
+// DTOs
+// ----------------------------
 export class CreateUserDto {
   @IsEmail({}, { message: 'Please provide a valid email address' })
   email: string;
 
   @IsNotEmpty({ message: 'Password is required' })
   password: string;
+
   constructor(email: string, password: string) {
     this.email = email;
     this.password = password;
   }
 }
+
 export class CreateUserDtoRes {
   @IsEmail({}, { message: 'Please provide a valid email address' })
   email: string;
 
   @IsNotEmpty({ message: 'Password is required' })
   @IsString()
-  @MinLength(2)
+  @MinLength(2, { message: 'Password must be at least 2 characters long' })
   password: string;
+
   constructor(email: string, password: string) {
     this.email = email;
     this.password = password;
   }
 }
 
+// ----------------------------
+// Service
+// ----------------------------
 @Injectable()
 export class AppService {
+  private piscina: Piscina;
+
   constructor(
     @InjectRepository(Posts)
-    private postsRepository: Repository<Posts>,
-  ) {}
+    private readonly postsRepository: Repository<Posts>,
+  ) {
+    // ✅ Create Piscina once and reuse
+    this.piscina = new Piscina({
+      filename: join(__dirname, './workers/posts.worker.js'),
+      maxThreads: 4, // limit to prevent high RAM usage
+      idleTimeout: 10000, // stop workers after 10s of inactivity
+    });
+  }
+
   getHello(): string {
     return 'Hello World!';
   }
 
+  // ----------------------------
+  // Example: Validate simple DTO manually
+  // ----------------------------
   async getDto(crt: any): Promise<CreateUserDtoRes[]> {
-    console.log(2222, crt);
-    const arr: CreateUserDto[] = [];
-    for (let i = 0; i < 212; i++) {
-      const data: CreateUserDto = new CreateUserDtoRes(crt.email, crt.password);
+    const arr: CreateUserDtoRes[] = [];
 
-      console.log(334534, data, data.password.length);
+    for (let i = 0; i < 212; i++) {
+      const data = new CreateUserDtoRes(crt.email, crt.password);
+
       const errors: ValidationError[] = await validate(data);
       if (errors.length) {
-        console.log(44444, errors);
         throw new BadRequestException(errors);
       }
       arr.push(data);
     }
+
     return arr;
   }
+
+  // ----------------------------
+  // Return all posts (raw)
+  // ----------------------------
   async getPosts(): Promise<Posts[]> {
     return await this.postsRepository.find();
   }
+
+  // ----------------------------
+  // Normal DTO validation (main thread)
+  // ----------------------------
   async getPostsWithDto(): Promise<CreatePostDto[]> {
     const bigArr = await this.postsRepository.find();
     const arr: CreatePostDto[] = [];
-    for (let i = 0; i < bigArr.length; i++) {
-      const el = bigArr[i];
+
+    for (const el of bigArr) {
       const data = new CreatePostDto();
       data.id = el.id;
       data.title = el.title;
@@ -80,53 +111,27 @@ export class AppService {
       data.updatedAt = el.updatedAt;
       data.isPublished = el.isPublished;
 
-      const errors: ValidationError[] = await validate(data);
+      const errors = await validate(data);
       if (errors.length) {
-        console.log(44444, errors);
         throw new BadRequestException(errors);
       }
+
       arr.push(data);
     }
+
     return arr;
   }
-  // async validateUserManually(
-  //   userData: Partial<CreateUserDto>,
-  // ): Promise<ValidationResult> {
-  //   const userDto = Object.assign(new CreateUserDto(), userData);
 
-  //   const errors: ValidationError[] = await validate(userDto);
+  // ----------------------------
+  // Worker-thread version (non-blocking, memory-safe)
+  // ----------------------------
+  async getPostsWithDtoWorker(): Promise<CreatePostDto[]> {
+    const bigArr = await this.postsRepository.find();
 
-  //   if (errors.length > 0) {
-  //     const errorMessages = errors.flatMap((error) =>
-  //       Object.values(error.constraints || {}),
-  //     );
+    // ✅ Reuse existing Piscina instance
+    const data = await this.piscina.run(bigArr);
 
-  //     return {
-  //       isValid: false,
-  //       errors: errorMessages,
-  //     };
-  //   }
-
-  //   return {
-  //     isValid: true,
-  //     data: userDto,
-  //   };
-  // }
-
-  // // Example usage with test data
-  // async testValidation(): Promise<void> {
-  //   // Test invalid email
-  //   const invalidResult = await this.validateUserManually({
-  //     email: 'invalid-email',
-  //     password: 'password',
-  //   });
-  //   console.log('Invalid result:', invalidResult);
-
-  //   // Test valid data
-  //   const validResult = await this.validateUserManually({
-  //     email: 'test@example.com',
-  //     password: 'password123',
-  //   });
-  //   console.log('Valid result:', validResult);
-  // }
+    console.log('First item:', data[0]);
+    return data;
+  }
 }
